@@ -77,6 +77,10 @@
       cursor:pointer;transition:transform .15s,box-shadow .15s
     }
     .color-circle:hover{transform:scale(1.15);box-shadow:0 0 0 2px #000 inset,0 0 0 2px #fff4}
+    .color-circle.active{
+  box-shadow:0 0 0 2px #000 inset, 0 0 0 2px #fff8, 0 0 10px rgba(255,255,255,.35);
+  transform:scale(1.15);
+}
 
     /* WORKS (Carousel – 페이드) */
     #works.carousel{
@@ -185,12 +189,7 @@
     <!-- HOME -->
     <section id="home">
       <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/영상ID?autoplay=1&mute=1&loop=1&playlist=영상ID&controls=0&modestbranding=1&playsinline=1"
-          frameborder="0"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+      <video src="https://files.mybox.naver.com/file/download.api?auth=3&resourceKey=ZnVsZmVlbGl8MzQ3MjU5Nzc3NDkwNzkyNTU5MnxGfDA&atoken=T0n1FrRWOPV%2FWsKp9oeD1LUYGt5JHUrGshga84YV8jYA&NdriveSvcType=NHN%2FND-WEB%20Ver&resourceType=vencode" width="100%" autoplay muted controls></video>
       </div>
     </section>
 
@@ -430,7 +429,65 @@
       // 초기 렌더
       render();
     });
+    /* ===== ABOUT: 색상 버튼 클릭 → 이미지 변경(페이드) ===== */
+(function bindColorSwatches(){
+  document.querySelectorAll('#about .card').forEach((card)=>{
+    const main = card.querySelector('.img-main');
+    // 오버레이(페이드) 이미지 한 장만 써서 전환
+    let overlay = card.querySelector('.img-fade');
+    if(!overlay){
+      overlay = main.cloneNode(true);
+      overlay.classList.add('img-fade');
+      overlay.style.opacity = '0';
+      overlay.style.position = 'absolute';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      card.querySelector('.img-wrapper').appendChild(overlay);
+    }
+
+    const swatches = card.querySelectorAll('.color-circle');
+
+    // 현재 선택 표시 초기화(첫 번째 활성화)
+    if(swatches.length){
+      swatches.forEach(s => s.classList.remove('active'));
+      swatches[0].classList.add('active');
+    }
+
+    swatches.forEach((swatch)=>{
+      // 키보드 접근성 (선택)
+      swatch.setAttribute('role','button');
+      swatch.setAttribute('tabindex','0');
+
+      const apply = ()=>{
+        const newSrc = swatch.dataset.img;
+        if(!newSrc) return;
+
+        // 오버레이에 새 이미지 넣고 페이드인
+        overlay.src = newSrc;
+        overlay.style.transition = 'opacity .35s ease';
+        main.style.transition    = 'opacity .35s ease';
+        overlay.style.opacity = '1';
+        main.style.opacity    = '0';
+
+        // 전환 완료 후 메인 교체
+        setTimeout(()=>{
+          main.src = newSrc;
+          main.style.opacity = '1';
+          overlay.style.opacity = '0';
+        }, 350);
+
+        // active 표시
+        swatches.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+      };
+
+      swatch.addEventListener('click', apply);
+      swatch.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); apply(); }
+      });
+    });
+  });
+})();
   </script>
 </body>
 </html>
-
