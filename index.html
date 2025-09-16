@@ -19,7 +19,7 @@
       font-family:'Pretendard Variable',sans-serif;height:100%;overflow-x:hidden
     }
 
-    /* 래퍼: 기존 1920×980 고정 섹션 유지 */
+    /* 래퍼: 1920×980 섹션 유지 */
     .wrapper{width:100%;max-width:1920px;height:980px;margin:0 auto;position:relative}
     .wrapper section{width:100%;height:980px;scroll-margin-top:80px}
 
@@ -78,7 +78,7 @@
     }
     .color-circle:hover{transform:scale(1.15);box-shadow:0 0 0 2px #000 inset,0 0 0 2px #fff4}
 
-    /* WORKS (Carousel – 페이드 방식) */
+    /* WORKS (Carousel – 페이드) */
     #works.carousel{
       position:relative;width:100%;height:980px;overflow:hidden;
       background:url('img/JBLBG03.png') center/cover no-repeat;color:#fff
@@ -122,44 +122,45 @@
     #music .explore-btn{padding:12px 22px;font-size:16px;border:none;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer;transition:filter .2s}
     #music .explore-btn:hover{filter:brightness(1.05)}
 
-    /* BRAND (연혁) – 좌측 썸네일 sticky, 우측 콘텐츠 중앙 정렬 */
+    /* BRAND – 중앙 슬라이드(썸네일/사이드 버튼 제거) */
     #brand{
-      background:url('img/JBLBG5.png') center/cover no-repeat;position:relative;z-index:1;
-      display:grid;grid-template-columns:220px 1fr;column-gap:40px;align-items:center;padding:60px 60px 60px 30px
+      background:url('img/JBLBG5.png') center/cover no-repeat;position:relative;z-index:1;height:980px;
+      display:flex;align-items:center;justify-content:center;padding:0 40px
     }
-    .year-nav{position:sticky;top:100px;align-self:start;display:flex;flex-direction:column;gap:10px}
-    .img-wrap{
-      width:180px;height:101px;overflow:hidden;cursor:pointer;position:relative;border-radius:12px;
-      border:1px solid rgba(255,255,255,.1);transition:transform .2s,border-color .2s,box-shadow .2s
+    .brand-slider{
+      position:relative;width:min(1200px,88vw);height:min(700px,70vh);
+      border-radius:24px;overflow:hidden;
+      background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45));
+      border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)
     }
-    .img-wrap:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.25);box-shadow:var(--shadow)}
-    .img-wrap img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .25s;position:relative;z-index:1}
-    .img-wrap:hover img{opacity:0}
-    .img-wrap::after{
-      content:"";position:absolute;inset:0;background-position:center;background-repeat:no-repeat;background-size:contain;
-      opacity:0;transition:opacity .25s;z-index:2
-    }
-    .img-wrap:nth-child(1)::after{background-image:url(nav/nav2/nav1.png)}
-    .img-wrap:nth-child(2)::after{background-image:url(nav/nav2/nav2.png)}
-    .img-wrap:nth-child(3)::after{background-image:url(nav/nav2/nav3.png)}
-    .img-wrap:nth-child(4)::after{background-image:url(nav/nav2/nav4.png)}
-    .img-wrap:nth-child(5)::after{background-image:url(nav/nav2/nav5.png)}
-    .img-wrap:nth-child(6)::after{background-image:url(nav/nav2/nav6.png)}
-    .img-wrap:nth-child(7)::after{background-image:url(nav/nav2/nav7.png)}
-    .img-wrap:nth-child(8)::after{background-image:url(nav/nav2/nav8.png)}
-    .img-wrap:nth-child(9)::after{background-image:url(nav/nav2/nav9.png)}
-    .img-wrap:hover::after{opacity:1}
+    .brand-track{position:absolute;inset:0;display:flex;transition:transform .6s ease}
+    .brand-slide{position:relative;min-width:100%;height:100%}
+    .brand-slide img{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.02) saturate(1.02)}
 
-    #year-content{
-      place-self:center;max-width:760px;width:100%;
-      display:flex;flex-direction:column;align-items:center;gap:18px;
-      padding:22px;border-radius:18px;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45));
-      border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow);opacity:0;transform:translateY(20px);
-      transition:opacity .35s,transform .35s
+    .brand-meta{
+      position:absolute;left:0;right:0;bottom:0;padding:22px 28px;text-align:center;
+      background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55))
     }
-    #brand.loaded #year-content{opacity:1;transform:none}
-    #year-img{width:100%;height:auto;display:block;border-radius:12px}
-    #year-description{font-size:18px;color:#f0f0f0;text-align:center;line-height:1.6}
+    .brand-year{font-size:40px;font-weight:900;letter-spacing:.6px;margin-bottom:6px}
+    .brand-desc{font-size:18px;color:#f0f0f0;opacity:.95;line-height:1.6}
+
+    .brand-nav{
+      position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(0,0,0,.45);color:#fff;border:none;width:52px;height:52px;border-radius:50%;
+      font-size:28px;cursor:pointer;z-index:2;transition:background .2s ease,transform .1s ease
+    }
+    .brand-nav:hover{background:rgba(0,0,0,.7)}
+    .brand-nav:active{transform:translateY(-50%) scale(.97)}
+    .brand-nav.prev{left:14px}.brand-nav.next{right:14px}
+
+    .brand-dots{
+      position:absolute;left:50%;transform:translateX(-50%);bottom:14px;display:flex;gap:10px;z-index:2
+    }
+    .brand-dot{
+      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5);
+      cursor:pointer;transition:transform .15s,background .15s
+    }
+    .brand-dot.active{background:#fff;transform:scale(1.15)}
 
     /* 캐릭터 */
     .character{position:absolute;right:2%;bottom:2%;z-index:2}
@@ -185,8 +186,10 @@
     <section id="home">
       <div class="video-wrapper">
         <iframe
-          src="https://www.youtube.com/embed/daExL9e3Pio?autoplay=1&mute=1&loop=1&playlist=daExL9e3Pio&controls=0&modestbranding=1"
-          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        src="https://www.youtube.com/embed/LHIUJ08vXf4?autoplay=1&mute=1&loop=1&playlist=LHIUJ08vXf4&controls=0&modestbranding=1&playsinline=1"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen></iframe>
       </div>
     </section>
 
@@ -292,30 +295,28 @@
       </div>
     </section>
 
-    <!-- BRAND -->
+    <!-- BRAND: 중앙 슬라이드 -->
     <section id="brand">
-      <div class="year-nav">
-        <div class="img-wrap" data-year="1940"><img src="nav/nav1.png" alt="1940"></div>
-        <div class="img-wrap" data-year="1950"><img src="nav/nav2.png" alt="1950"></div>
-        <div class="img-wrap" data-year="1960"><img src="nav/nav3.png" alt="1960"></div>
-        <div class="img-wrap" data-year="1970"><img src="nav/nav4.png" alt="1970"></div>
-        <div class="img-wrap" data-year="1980"><img src="nav/nav5.png" alt="1980"></div>
-        <div class="img-wrap" data-year="1990"><img src="nav/nav6.png" alt="1990"></div>
-        <div class="img-wrap" data-year="2000"><img src="nav/nav7.png" alt="2000"></div>
-        <div class="img-wrap" data-year="2010"><img src="nav/nav8.png" alt="2010"></div>
-        <div class="img-wrap" data-year="2020"><img src="nav/nav9.png" alt="2020"></div>
-      </div>
+      <div class="brand-slider">
+        <button class="brand-nav prev" aria-label="이전">‹</button>
 
-      <div id="year-content">
-        <img id="year-img" src="year/year1.png" alt="연도 이미지" />
-        <p id="year-description">JBL의 역사</p>
+        <div class="brand-track"><!-- JS에서 슬라이드 주입 --></div>
+
+        <button class="brand-nav next" aria-label="다음">›</button>
+
+        <div class="brand-meta">
+          <div class="brand-year">1940s</div>
+          <p class="brand-desc">JBL의 역사</p>
+        </div>
+
+        <div class="brand-dots" aria-label="슬라이드 인디케이터"></div>
       </div>
     </section>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // ===== Carousel (works) – 페이드 전환 =====
+      /* ===== WORKS 캐러셀 ===== */
       const slides = document.querySelectorAll(".slide");
       const currentEl = document.querySelector(".current");
       const totalEl = document.querySelector(".total");
@@ -338,89 +339,96 @@
       showSlide(current);
       setInterval(goNext, 5000);
 
-      // ===== GSAP 애니메이션 =====
+      /* ===== GSAP ===== */
       gsap.registerPlugin(ScrollTrigger);
-
-      // 카드 등장
       gsap.utils.toArray(".card").forEach((card, i) => {
         gsap.to(card, {
           scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" },
           opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: i * 0.08
         });
       });
-
-      // works 헤더 등장
       gsap.to(".works-header", {
         scrollTrigger: { trigger: "#works", start: "top 85%", toggleActions: "play none none none" },
         opacity: 1, y: 0, duration: 0.9, ease: "power2.out"
       });
 
-      // ===== 카드 컬러 스와치 → 이미지 페이드 전환 =====
-      document.querySelectorAll('.card').forEach(card => {
-        const imgMain = card.querySelector('.img-main');
-        const imgFades = Array.from(card.querySelectorAll('.img-fade'));
-        const circles = card.querySelectorAll('.color-circle');
+      /* ===== BRAND: 중앙 슬라이드 ===== */
+      const brandData = [
+        { year: '1940s', img: 'year/year1.png', desc: '1940년대 James Bullough Lansing이 JBL을 설립' },
+        { year: '1950s', img: 'year/year2.png', desc: '1950년대 하이파이 오디오 붐이 일어남 대표적인 모델 Paragon을 만듦' },
+        { year: '1960s', img: 'year/year3.png', desc: '1960년대 가구처럼 생긴 고급 스피커 붐 대표적인 모델 Hartsfield' },
+        { year: '1970s', img: 'year/year4.png', desc: '1970년대 프로 오디오로 확장. 방송국, 녹음실에서 쓰는 모델을 주력' },
+        { year: '1980s', img: 'year/year5.png', desc: '1980년대 프로 오디오지만, 일반 소비자도 노린 제품 출시.' },
+        { year: '1990s', img: 'year/year6.png', desc: '1990년대 일반 소비자를 위한 제품을 주력으로 출시.' },
+        { year: '2000s', img: 'year/year7.png', desc: '2000년대 홈 오디오 열풍, 휴대성이 높은 제품 출시.' },
+        { year: '2010s', img: 'year/year8.png', desc: '2010년대 블루투스 스피커 시대' },
+        { year: '2020s', img: 'year/year9.png', desc: '2020년대 블루투스 오디오를 주력으로 확장.' },
+      ];
 
-        circles.forEach(circle => {
-          circle.addEventListener('click', () => {
-            const idx = Number(circle.dataset.index) || 0;
-            const newImg = circle.dataset.img;
-            const targetFade = imgFades[idx] ?? imgFades[0];
+      const track = document.querySelector('.brand-track');
+      const yearEl = document.querySelector('.brand-year');
+      const descEl = document.querySelector('.brand-desc');
+      const prevB = document.querySelector('.brand-nav.prev');
+      const nextB = document.querySelector('.brand-nav.next');
+      const dotsWrap = document.querySelector('.brand-dots');
 
-            targetFade.src = newImg;
-            targetFade.style.opacity = '1';
-            imgMain.style.opacity = '0';
+      // 슬라이드/도트 DOM 생성
+      brandData.forEach((d, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'brand-slide';
+        slide.setAttribute('role', 'group');
+        slide.setAttribute('aria-label', `${i+1} / ${brandData.length}`);
+        slide.innerHTML = `<img src="${d.img}" alt="${d.year} 이미지" />`;
+        track.appendChild(slide);
 
-            setTimeout(() => {
-              imgMain.src = newImg;
-              imgMain.style.opacity = '1';
-              targetFade.style.opacity = '0';
-            }, 500);
-          });
-        });
+        const dot = document.createElement('button');
+        dot.className = 'brand-dot';
+        dot.setAttribute('aria-label', `${d.year} 보기`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
       });
 
-      // ===== BRAND: 연도 클릭 → 콘텐츠 업데이트 + 중앙 스크롤 =====
-      const brand = document.getElementById('brand');
-      const yearImg = document.getElementById('year-img');
-      const yearDesc = document.getElementById('year-description');
-      const yearContent = document.getElementById('year-content');
+      const dots = Array.from(document.querySelectorAll('.brand-dot'));
+      let idx = 0, autoTimer = null;
 
-      brand.classList.add('loaded');
-
-      const yearMap = {
-        '1940': { img: 'year/year1.png', desc: '1940년대 James Bullough Lansing이 JBL을 설립' },
-        '1950': { img: 'year/year2.png', desc: '1950년대 하이파이 오디오 붐이 일어남 대표적인 모델 Paragon을 만듦' },
-        '1960': { img: 'year/year3.png', desc: '1960년대 가구처럼 생긴 고급 스피커 붐 대표적인 모델 Hartsfield' },
-        '1970': { img: 'year/year4.png', desc: '1970년대 프로 오디오로 확장. 방송국, 녹음실에서 쓰는 모델을 주력' },
-        '1980': { img: 'year/year5.png', desc: '1980년대 프로 오디오지만, 일반 소비자도 노린 제품 출시.' },
-        '1990': { img: 'year/year6.png', desc: '1990년대 일반 소비자를 위한 제품을 주력으로 출시.' },
-        '2000': { img: 'year/year7.png', desc: '2000년대 홈 오디오 열풍, 휴대성이 높은 제품 출시.' },
-        '2010': { img: 'year/year8.png', desc: '2010년대 블루투스 스피커 시대.' },
-        '2020': { img: 'year/year9.png', desc: '2020년대 블루투스 오디오를 주력으로 확장.' },
-      };
-
-      function updateYearContent(year) {
-        const data = yearMap[year];
-        if (!data) {
-          yearImg.src = '';
-          yearDesc.textContent = '해당 연도의 정보가 없습니다.';
-          return;
-        }
-        yearContent.style.opacity = '0';
-        setTimeout(() => {
-          yearImg.src = data.img;
-          yearDesc.textContent = data.desc || 'JBL의 역사';
-          yearContent.style.opacity = '1';
-        }, 180);
-        yearContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      function render(){
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        yearEl.textContent = brandData[idx].year;
+        descEl.textContent = brandData[idx].desc || 'JBL의 역사';
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
       }
+      function goTo(i){ idx = (i + brandData.length) % brandData.length; render(); restartAuto(); }
+      const goPrevBrand = () => goTo(idx - 1);
+      const goNextBrand = () => goTo(idx + 1);
 
-      document.querySelectorAll('.img-wrap').forEach(wrap => {
-        wrap.addEventListener('click', () => updateYearContent(wrap.getAttribute('data-year')));
+      prevB.addEventListener('click', goPrevBrand);
+      nextB.addEventListener('click', goNextBrand);
+
+      function startAuto(){ autoTimer = setInterval(goNextBrand, 5000); }
+      function stopAuto(){ clearInterval(autoTimer); }
+      function restartAuto(){ stopAuto(); startAuto(); }
+
+      // 자동재생 + 마우스오버 일시정지
+      startAuto();
+      document.querySelector('.brand-slider').addEventListener('mouseenter', stopAuto);
+      document.querySelector('.brand-slider').addEventListener('mouseleave', startAuto);
+
+      // 키보드/스와이프
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goPrevBrand();
+        if (e.key === 'ArrowRight') goNextBrand();
       });
+      let sx = null;
+      track.addEventListener('touchstart', (e)=> sx = e.touches[0].clientX, {passive:true});
+      track.addEventListener('touchmove', (e)=>{
+        if(sx===null) return;
+        const dx = e.touches[0].clientX - sx;
+        if(Math.abs(dx) > 40){ dx>0 ? goPrevBrand() : goNextBrand(); sx=null; }
+      },{passive:true});
+
+      // 초기 렌더
+      render();
     });
   </script>
 </body>
 </html>
-
